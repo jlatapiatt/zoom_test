@@ -4,6 +4,10 @@ import { DOCUMENT } from '@angular/common';
 
 import { ZoomMtg } from '@zoomus/websdk';
 
+// const crypto = require('crypto')
+import * as crypto from "crypto-js";
+
+
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareJssdk();
 
@@ -17,12 +21,14 @@ export class AppComponent implements OnInit {
   // setup your signature endpoint here: https://github.com/zoom/websdk-sample-signature-node.js
   signatureEndpoint = 'http://localhost:4000'
   apiKey = 'Mil3kmPKTYOHg5APxMUYPw'
-  meetingNumber = 79415779097
+  meetingNumber = 71256584029
+  //meetingNumber = 79415779097
   role = 0
   leaveUrl = 'http://localhost:4200'
   userName = 'Angular'
   userEmail = ''
-  passWord = '27LKBa'
+  passWord = 'M3Dk09'
+  //passWord = '27LKBa'
 
   constructor(public httpClient: HttpClient, @Inject(DOCUMENT) document) {
 
@@ -33,7 +39,45 @@ export class AppComponent implements OnInit {
   }
 
   getSignature() {
-    this.httpClient.post(this.signatureEndpoint, {
+    var req = {
+      meetingNumber: this.meetingNumber,
+	    role: this.role
+    }
+    const API_KEY = 'Mil3kmPKTYOHg5APxMUYPw'
+    const API_SECRET = 'D5FBqEL67b1DvjMwPVFmeqXK7f1XCJbAibO8'
+    const timestamp = new Date().getTime() - 30000
+    const msg = ('' + API_KEY + this.meetingNumber + timestamp + this.role)
+    //const hash = crypto.createHmac('sha256', API_SECRET).update(msg).digest('base64')
+    var hash = crypto.HmacSHA256(msg, API_SECRET)
+    hash = crypto.enc.Base64.stringify(hash)
+    console.log(hash)
+    // const signature = Buffer.from(`${API_KEY}.${this.meetingNumber}.${timestamp}.${this.role}.${hash}`).toString('base64')
+    var flag = false;
+    var signature = ZoomMtg.generateSignature({
+      meetingNumber: this.meetingNumber,
+      apiKey: API_KEY,
+      apiSecret: API_SECRET,
+      role: this.role
+    
+        //this.startMeeting(res.result)
+    })
+    //if (flag) {
+      this.startMeeting(signature)
+    //}
+
+      //success: function (res) {
+        //console.log(res.result);
+        //this.signature = res.result;
+        //this.apiKey = API_KEY;
+        //this.this.startMeeting(res.result)
+        //var joinUrl = "/meeting.html?" + testTool.serialize(meetingConfig);
+        //console.log(joinUrl);
+        //window.open(joinUrl, "_blank");
+      //},
+    //});
+    // TWlsM2ttUEtUWU9IZzVBUHhNVVlQdy43OTQxNTc3OTA5Ny4xNTk4Mjg0NDM4NzUzLjAuZUR4UnJiUGh6UUlsdmN1WWJsUHpSWVAvbCsyNE1PREJaWEhocm55UlpDaz0=
+    //this.startMeeting(signature)
+    /* this.httpClient.post(this.signatureEndpoint, {
 	    meetingNumber: this.meetingNumber,
 	    role: this.role
     }).toPromise().then((data: any) => {
@@ -45,7 +89,7 @@ export class AppComponent implements OnInit {
       }
     }).catch((error) => {
       console.log(error)
-    })
+    }) */
   }
 
   startMeeting(signature) {
