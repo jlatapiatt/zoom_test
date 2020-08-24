@@ -22,12 +22,12 @@ export class AppComponent implements OnInit {
   
 
   // setup your signature endpoint here: https://github.com/zoom/websdk-sample-signature-node.js
-  signatureEndpoint = 'https://zoom-test-mtapia.herokuaoo.com'
+  signatureEndpoint = 'https://zoom-test-mtapia.herokuapp.com'
   apiKey = 'Mil3kmPKTYOHg5APxMUYPw'
   meetingNumber = 71256584029
   //meetingNumber = 79415779097
   role = 0
-  leaveUrl = 'http://localhost:4200'
+  leaveUrl = 'https://zoom-test-mtapia.herokuapp.com'
   userName = 'Angular'
   userEmail = ''
   passWord = 'M3Dk09'
