@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 
+
 import { ZoomMtg } from '@zoomus/websdk';
 
 // const crypto = require('crypto')
@@ -17,6 +18,8 @@ ZoomMtg.prepareJssdk();
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  
 
   // setup your signature endpoint here: https://github.com/zoom/websdk-sample-signature-node.js
   signatureEndpoint = 'https://zoom-test-mtapia.herokuaoo.com'

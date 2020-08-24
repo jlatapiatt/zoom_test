@@ -1,5 +1,13 @@
 <main>
   <h1>Prueba de Zoom</h1>
-
+  <div>
+    <label>Numero de Reunión:
+      <input [(ngModel)]="meetingNumber" placeholder="name"/>
+    </label>
+    <br>
+    <label>Contraseña de Reunión:
+      <input [(ngModel)]="passWord" placeholder="name"/>
+    </label>
+  </div>
   <button (click)="getSignature()">Unirse a la reunion</button>
 </main>
